@@ -1,10 +1,11 @@
+import { Web3Provider } from "@components/providers";
 import { Footer, Navbar } from "@components/ui/common";
 
 
 
 export default function BaseLayout({children}) {
     return (
-        <div className="overflow-hidden">
+        <Web3Provider>
         <div className="relative max-w-7xl mx-auto px-4">
            <Navbar />
           <div className="fit">
@@ -12,6 +13,6 @@ export default function BaseLayout({children}) {
           </div>
         </div>
         <Footer />
-      </div>
+      </Web3Provider>
     )
 }
