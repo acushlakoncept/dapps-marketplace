@@ -5,6 +5,7 @@ import { OrderCard } from "@components/ui/order";
 import { getAllCourses } from "@content/courses/fetcher";
 
 export default function Home({courses}) {
+
   return (
       <>
         <Hero />
