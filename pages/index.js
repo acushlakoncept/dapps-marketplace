@@ -2,16 +2,24 @@ import { Breadcrumbs, Hero, EthRates, WalletBar} from "@components/common";
 import { CourseList } from "@components/course";
 import { BaseLayout } from "@components/layout";
 import { OrderCard } from "@components/order";
+import { getAllCourses } from "@content/courses/fetcher";
 
-export default function Home() {
+export default function Home({courses}) {
   return (
-      <BaseLayout>
+      <>
         <Hero />
-        <Breadcrumbs />
-        <EthRates />
-        <WalletBar />
-        <OrderCard />
-        <CourseList />
-      </BaseLayout>
+        <CourseList courses={courses} />
+      </>
   )
 }
+
+export function getStaticProps() {
+  const {data} = getAllCourses();
+  return {
+    props: {
+      courses: data
+    }
+  }
+}
+
+Home.Layout = BaseLayout;
