@@ -1,7 +1,7 @@
-import { Breadcrumbs, Hero, EthRates, WalletBar} from "@components/common";
-import { CourseList } from "@components/course";
-import { BaseLayout } from "@components/layout";
-import { OrderCard } from "@components/order";
+import { Breadcrumbs, Hero, EthRates, WalletBar} from "@components/ui/common";
+import { CourseList } from "@components/ui/course";
+import { BaseLayout } from "@components/ui/layout";
+import { OrderCard } from "@components/ui/order";
 import { getAllCourses } from "@content/courses/fetcher";
 
 export default function Home({courses}) {
