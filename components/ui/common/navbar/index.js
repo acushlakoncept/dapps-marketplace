@@ -1,12 +1,11 @@
 import { useWeb3 } from '@components/providers';
 import Link from 'next/link';
 import { Button } from '@components/ui/common';
-import { useRouter } from 'next/router';
-
+import { useAccount } from '@components/web3/hooks/useAccount';
 
 export default function Navbar() {
-  const { connect, isLoading, isWeb3Loaded } = useWeb3();
-  const router = useRouter();
+  const { connect, isLoading, isWeb3Loaded  } = useWeb3();
+  const { account } = useAccount();
 
     return (
         <section>
@@ -42,9 +41,11 @@ export default function Navbar() {
                         disabled={true}
                         onClick={connect} >Loading...</Button> : 
                       isWeb3Loaded ? 
+                      account ?
+                      <Button hoverable={false} className='cursor-default'>{`${account.slice(0,12)}...`}</Button> :
                       <Button onClick={connect} >Connect</Button> :
                       <Button 
-                        onClick={() => router.push("https://metamask.io/download.html")}>
+                        onClick={() => window.open("https://metamask.io/download.html", "_blank")}>
                           Install Metamask
                       </Button>
                     }
