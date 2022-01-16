@@ -1,26 +1,33 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import useSWR from 'swr'
 
+const adminAddresses = {
+    "0xae624f6fa5bbb2f3a163b3587f8e002fde0985a241c09459d61bc61dac12741a" : true
+}
 
+export const handler = (web3, provider) => () => {
 
-export const handler = web3 => () => {
-    const [account, setAccount] = useState(null);
-    
-    useEffect(() => {
-        const getAccount = async () => {
-            const accounts = await web3.eth.getAccounts();
-            setAccount(accounts[0]);
+    const { data, mutate, ...rest } = useSWR(() => 
+        web3 ? "web3/accounts" : null,
+        async () => {
+          const accounts = await web3.eth.getAccounts();
+          return accounts[0];
         }
-
-        web3 && getAccount();
-    }, [web3]);
-
+    )
 
     useEffect(() => {
-        window.ethereum &&
-        window.ethereum.on("accountsChanged", 
-          accounts => setAccount(accounts[0] ?? null)
+       provider &&
+       provider.on("accountsChanged", 
+          accounts => mutate(accounts[0] ?? null)
         )
-    }, []);
+    }, [provider]);
 
-    return { account }
+    return { 
+        account: {
+            data,
+            isAdmin: (data && adminAddresses[web3.utils.keccak256(data)]) ?? false,
+            mutate,
+            ...rest 
+        }
+    }
 }
