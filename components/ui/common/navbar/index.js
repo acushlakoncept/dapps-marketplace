@@ -1,8 +1,8 @@
 import { useWeb3 } from '@components/providers';
 import Link from 'next/link';
 import { Button } from '@components/ui/common';
-import { useAccount } from '@components/hooks/web3/useAccount';
 import { useRouter } from 'next/router';
+import { useAccount } from '@components/hooks/web3';
 
 export default function Navbar() {
   const { connect, isLoading, isWeb3Loaded  } = useWeb3();
