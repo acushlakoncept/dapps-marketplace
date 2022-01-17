@@ -1,6 +1,6 @@
 import { useAccount } from "@components/hooks/web3/useAccount";
 import { useNetwork } from "@components/hooks/web3/useNetwork";
-import { CourseList } from "@components/ui/course";
+import { CourseCard, CourseList } from "@components/ui/course";
 import { BaseLayout } from "@components/ui/layout";
 import { WalletBar } from "@components/ui/web3";
 import { getAllCourses } from "@content/courses/fetcher";
@@ -16,7 +16,13 @@ export default function Marketplace({courses}) {
             address={account.data}
             network={network} /> 
         </div>
-        <CourseList courses={courses} />
+        <CourseList courses={courses}>
+          {course => 
+            <CourseCard 
+              key={course.id} 
+              course={course} 
+            />}
+        </CourseList>
       </>
   )
 }
