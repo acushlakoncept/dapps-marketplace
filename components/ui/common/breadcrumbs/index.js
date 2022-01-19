@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { ActiveLink } from "..";
+import {ActiveLink} from '@components/ui/common';
 
 
 
