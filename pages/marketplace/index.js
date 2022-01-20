@@ -10,6 +10,10 @@ import { useState } from "react";
 export default function Marketplace({courses}) {
   const [selectedCourse, setSelectedCourse] = useState(null);
     const {canPurchaseCourse} = useWalletInfo();
+
+    const purchaseCourse = (order) => {
+      alert(JSON.stringify(order))
+    }
     
   return (
       <>
@@ -36,7 +40,8 @@ export default function Marketplace({courses}) {
             />}
         </CourseList>
         { selectedCourse &&
-          <OrderModal 
+          <OrderModal
+            onSubmit={purchaseCourse}
             course={selectedCourse}
             onClose={() => setSelectedCourse(null)}
            />
