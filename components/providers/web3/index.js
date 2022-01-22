@@ -1,5 +1,4 @@
-const { createContext, useContext, useEffect, useState, useMemo } = require("react");
-const { Children } = require("react/cjs/react.production.min");
+import { createContext, useContext, useEffect, useState, useMemo } from 'react';
 
 import detectEthereumProvider from "@metamask/detect-provider";
 import { loadContract } from "@utils/loadContracts";
