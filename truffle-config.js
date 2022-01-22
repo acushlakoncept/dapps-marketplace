@@ -1,8 +1,8 @@
 
 
 module.exports = {
+  contracts_build_directory: "./public/contracts",
   networks: {
-    contract_build_directory: "./public/contracts",
     development: {
      host: "127.0.0.1",
      port: 8545, 
