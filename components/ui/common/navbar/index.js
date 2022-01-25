@@ -12,7 +12,7 @@ export default function Navbar() {
         <section>
             <div className="relative pt-6 px-4 sm:px-6 lg:px-8">
               <nav className="relative" aria-label="Global">
-                <div className="flex justify-between items-center text-gray-500">
+                <div className="flex flex-col xs:flex-row justify-between items-center text-gray-500">
                   <div>
                     <ActiveLink href="/">
                       <a className="font-medium mr-8 hover:text-gray-900">
@@ -30,9 +30,9 @@ export default function Navbar() {
                       </a>
                     </ActiveLink>
                   </div>
-                  <div>
+                  <div className='text-center'>
                   <ActiveLink href="/wishlist">
-                    <a  className="font-medium mr-8 hover:text-gray-900">
+                    <a  className="font-medium mr-2 sm-mr-8 hover:text-gray-900">
                       Wishlist
                     </a>
                   </ActiveLink>
