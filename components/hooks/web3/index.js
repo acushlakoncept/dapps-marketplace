@@ -18,7 +18,7 @@ const enhanceHook = swrRes => {
     return {
         ...swrRes,
         isEmpty,
-        hasInitialResponse: swrRes.data || swrRes.error,
+        hasInitialResponse
     }
 }
 
