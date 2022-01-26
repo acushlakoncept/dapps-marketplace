@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 
     const lectures = [
         "How to init App",
@@ -9,7 +11,7 @@
       ]
 
 
-export default function Curriculum({locked}) {
+export default function Curriculum({locked, courseState}) {
     const statusClass = "px-2 inline-flex text-xs leading-5 font-semibold rounded-full";
     return (
         <section className="max-w-5xl mx-auto">
@@ -55,9 +57,34 @@ export default function Curriculum({locked}) {
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                            {/* <a href="#" className="text-indigo-600 hover:text-indigo-900">
                               { locked ? "Get Access" : "Play"}
-                            </a>
+                            </a> */}
+                            { locked ?
+                              <>
+                              { courseState === "deactivated" &&
+                                <Link href="/marketplace">
+                                  <a className="text-indigo-600 hover:text-indigo-900">
+                                    Get Access
+                                  </a>
+                                </Link>
+                              }
+                              { courseState === "purchased" &&
+                                <Link href="/faq">
+                                  <a className="text-yellow-500 hover:text-yellow-900">
+                                    Waiting for Activation
+                                  </a>
+                                </Link>
+                              }
+                              </> : 
+                              
+                              <Link href="/watch">
+                                <a className="text-indigo-600 hover:text-indigo-900">
+                                  Watch
+                                </a>
+                              </Link>
+  
+                            }
                           </td>
                         </tr>
                       )}
