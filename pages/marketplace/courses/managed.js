@@ -1,19 +1,39 @@
-import { useAccount, useManagedCourses } from "@components/hooks/web3";
+import { useAdmin, useManagedCourses } from "@components/hooks/web3";
 import { useWeb3 } from "@components/providers";
 import { Button, Message } from "@components/ui/common";
-import { CourseFilter, ManagedCourseCard, OwnedCourseCard } from "@components/ui/course";
+import { CourseFilter, ManagedCourseCard } from "@components/ui/course";
 import { BaseLayout } from "@components/ui/layout";
 import { MarketHeader } from "@components/ui/marketplace";
 import { useState } from "react";
 
+const VerificationInput = ({onVerify}) => {
+  const [email, setEmail] = useState("");
 
+  return (
+    <div className="flex mr-2 relative rounded-md">
+    <input
+      value={email}
+      onChange= {({target: {value}}) => setEmail(value)}
+      type="text"
+      name="account"
+      id="account"
+      className="w-96 focus:ring-indigo-500 shadow-md focus:border-indigo-500 block pl-7 p-4 sm:text-sm border-gray-300 rounded-md"
+      placeholder="0x2341ab..." />
+    <Button
+     onClick={() => {
+       onVerify(email)
+     }} >
+      Verify
+    </Button>
+  </div>
+  )
+}
 
 export default function ManagedCourses() {
-    const [email, setEmail] = useState("");
     const [ proofedOwnership, setProofedOwnership ] = useState({});
-    const { account } = useAccount();
+    const { account } = useAdmin({ redirectTo: "/marketplace" });
     const { web3 } = useWeb3();
-    const { managedCourses } = useManagedCourses(account.data);
+    const { managedCourses } = useManagedCourses(account);
 
     const verifyCourse = (email, {hash, proof}) => {
       const emailHash = web3.utils.sha3(email);
@@ -25,12 +45,16 @@ export default function ManagedCourses() {
       
       proofToCheck === proof ?
         setProofedOwnership({ 
+          ...proofedOwnership,
           [hash]: true 
         }) :
         setProofedOwnership({ 
+          ...proofedOwnership,
           [hash]: false
         })
     }
+
+    if (!account.isAdmin) { return null }
 
     return (
         <>
@@ -41,25 +65,13 @@ export default function ManagedCourses() {
                 <ManagedCourseCard
                   key={course.ownedCourseId}
                   course={course} >
-                    <div className="flex mr-2 relative rounded-md">
-                      <input
-                        value={email}
-                        onChange= {({target: {value}}) => setEmail(value)}
-                        type="text"
-                        name="account"
-                        id="account"
-                        className="w-96 focus:ring-indigo-500 shadow-md focus:border-indigo-500 block pl-7 p-4 sm:text-sm border-gray-300 rounded-md"
-                        placeholder="0x2341ab..." />
-                      <Button
-                       onClick={() => {
-                         verifyCourse(email, {
-                           hash: course.hash, 
-                           proof: course.proof
-                          })
-                       }} >
-                        Verify
-                      </Button>
-                    </div>
+                    <VerificationInput
+                     onVerify={(email) => {
+                       verifyCourse(email, {
+                         hash: course.hash,
+                          proof: course.proof
+                       })
+                     }} />
                     { proofedOwnership[course.hash] &&
                       <div>
                         <Message>
