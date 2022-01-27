@@ -21,6 +21,7 @@ export default function Marketplace({courses}) {
         { type: "address", value: account.data}
         );
       const emailHash = web3.utils.soliditySha3(order.email)
+      // const emailHash = web3.utils.sha3(order.email)
       const proof = web3.utils.soliditySha3(
         { type: "bytes32", value: orderHash },
         { type: "bytes32", value: emailHash },
