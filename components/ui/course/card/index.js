@@ -27,8 +27,10 @@ export default function Card({course, disabled, Footer}) {
             <p className="mt-2 text-sm sm:text-base  text-gray-500">
                 {course.description.substring(0, 70)}...
             </p>
-            { Footer && 
+            { Footer &&
+						<div className="mt-2">
                 <Footer />
+						</div>
             }
             </div>
         </div>

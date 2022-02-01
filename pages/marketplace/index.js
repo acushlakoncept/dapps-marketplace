@@ -1,6 +1,6 @@
-import { useWalletInfo } from "@components/hooks/web3";
+import { useOwnedCourses, useWalletInfo } from "@components/hooks/web3";
 import { useWeb3 } from "@components/providers";
-import { Button } from "@components/ui/common";
+import { Button, Loader } from "@components/ui/common";
 import { CourseCard, CourseList } from "@components/ui/course";
 import { BaseLayout } from "@components/ui/layout";
 import { MarketHeader } from "@components/ui/marketplace";
@@ -9,8 +9,9 @@ import { getAllCourses } from "@content/courses/fetcher";
 import { useState } from "react";
 
 export default function Marketplace({courses}) {
-  const { web3, contract } = useWeb3();
-  const {canPurchaseCourse, account} = useWalletInfo();
+  const { web3, contract, requireInstall } = useWeb3();
+  const {hasConnectedWallet, account, isConnecting} = useWalletInfo();
+  const { ownedCourses } = useOwnedCourses(courses, account.data);
   const [selectedCourse, setSelectedCourse] = useState(null);
 
     const purchaseCourse = async order => {
@@ -48,17 +49,58 @@ export default function Marketplace({courses}) {
             <CourseCard
               key={course.id} 
               course={course}
-              disabled={!canPurchaseCourse} 
-              Footer={() => 
-              <div className="mt-4">
-                <Button 
-                variant="lightPurple"
-                onClick={() => setSelectedCourse(course)}
-                disabled={!canPurchaseCourse}
-                >
-                  Purchase
-                </Button>
-              </div>
+              disabled={!hasConnectedWallet} 
+              Footer={() => {
+
+                 if(requireInstall) {
+                   return (
+                    <Button 
+                    variant="lightPurple"
+                    disabled={true}
+                    >
+                      Install
+                    </Button>
+                   )
+                 }
+
+                 if(isConnecting) {
+                    return (
+                      <Button 
+                      variant="lightPurple"
+                      disabled={true}
+                      >
+                        <Loader size="sm" />
+                      </Button>
+                    )
+                 }
+
+                 if(!ownedCourses.hasInitialResponse) {
+                  return (
+                    <div style={{height: "50px"}} />
+                  )
+                 }
+
+                 const owned = ownedCourses.lookup[course.id];
+                 if(owned) {
+                  return (
+                    <Button 
+                    variant="green"
+                    disabled={true}
+                    >
+                      Owned
+                    </Button>
+                  )
+                 }
+
+                 return (
+                  <Button 
+                  variant="lightPurple"
+                  onClick={() => setSelectedCourse(course)}
+                  disabled={!hasConnectedWallet}
+                  >
+                    Purchase
+                  </Button>
+                 )}
                 }
             />}
         </CourseList>
