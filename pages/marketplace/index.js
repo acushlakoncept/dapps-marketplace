@@ -1,6 +1,6 @@
 import { useOwnedCourses, useWalletInfo } from "@components/hooks/web3";
 import { useWeb3 } from "@components/providers";
-import { Button, Loader } from "@components/ui/common";
+import { Button, Loader, Message } from "@components/ui/common";
 import { CourseCard, CourseList } from "@components/ui/course";
 import { BaseLayout } from "@components/ui/layout";
 import { MarketHeader } from "@components/ui/marketplace";
@@ -83,12 +83,31 @@ export default function Marketplace({courses}) {
                  const owned = ownedCourses.lookup[course.id];
                  if(owned) {
                   return (
+                    <>
                     <Button 
                     variant="green"
                     disabled={true}
                     >
                       Owned
                     </Button>
+                    <div className="mt-1">
+                    { owned.state === "activated" &&
+                      <Message size="sm">
+                        Activated
+                      </Message>
+                    }
+                    { owned.state === "purchased" &&
+                      <Message size="sm" type="warning">
+                        Waiting for Activation
+                      </Message>
+                    }
+                    { owned.state === "deactivated" &&
+                      <Message size="sm" type="danger">
+                        Deactivated
+                      </Message>
+                    }
+                    </div>
+                    </>
                   )
                  }
 
