@@ -8,7 +8,7 @@ Has a modal window dedicated to making orders. Email hashing solution to maintai
 
 The application is built using the Next JS framework with Tailwind CSS framework. Next JS is internally using React library. It offers SSR(server-side rendering) by default.
 
-![screenshot](./stockist.gif)
+![screenshot](./marketplace.png)
 
 ## Live Demo
 [Live Demo](#)
