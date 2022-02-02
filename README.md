@@ -1,6 +1,41 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+# Marketplace Application
+
+An interactive marketplace where clients can purchase courses(students can choose products of their choice) with Ether digital currency.
+It features marketplace page with real-time updates of Ether currency and course prices compared to the US dollar.
+
+Has a modal window dedicated to making orders. Email hashing solution to maintain client's privacy. Order view with order filtering and pagination, and many others.
+
+The application is built using the Next JS framework with Tailwind CSS framework. Next JS is internally using React library. It offers SSR(server-side rendering) by default.
+
+![screenshot](./stockist.gif)
+
+## Live Demo
+[Live Demo](#)
 
 ## Getting Started
+
+To get a local copy up and running follow these simple example steps.
+
+### Prerequisites
+
+- Make sure Node.js is running on your local machine
+- Setup Ganache and truffle on your local machine
+
+### Setup
+
+~~~bash
+$ git clone git@github.com:acushlakoncept/dapps-marketplace.git
+$ cd dapps-marketplace
+~~~
+
+Install modules:
+
+```
+npm install
+```
+
+### Usage
 
 First, run the development server:
 
@@ -9,26 +44,27 @@ npm run dev
 # or
 yarn dev
 ```
+### Running Test
+`truffle test`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+# Author
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+👤 **Uduak Essien**
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- Github: [@acushlakoncept](https://github.com/acushlakoncept/)
+- Twitter: [@acushlakoncept](https://twitter.com/acushlakoncept)
+- Linkedin: [acushlakoncept](https://www.linkedin.com/in/acushlakoncept/)
 
-## Learn More
+## 🤝 Contributing
 
-To learn more about Next.js, take a look at the following resources:
+Contributions, issues and feature requests are welcome!
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Feel free to check the [issues page](issues/).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Show your support
 
-## Deploy on Vercel
+Give a ⭐️ if you like this project!
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Acknowledgments
+- Solidity & Ethereum in React (Next JS): The Complete Guide by Filip Jerga
