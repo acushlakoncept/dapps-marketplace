@@ -79,26 +79,25 @@ contract CourseMarketplace {
         });
     }
 
-		function repurchaseCourse(bytes32 courseHash)
-			external payable
-			{
-				if(!isCourseCreated(courseHash)) {
-					revert CourseIsNotCreated();
-				}
+    function repurchaseCourse(bytes32 courseHash)
+			external payable {
+					if(!isCourseCreated(courseHash)) {
+							revert CourseIsNotCreated();
+					}
 
-				if(!hasCourseOwnership(courseHash)) {
-					revert SenderIsNotCourseOwner();
-				}
+					if(!hasCourseOwnership(courseHash)) {
+							revert SenderIsNotCourseOwner();
+					}
 
-				Course storage course = ownedCourses[courseHash];
+					Course storage course = ownedCourses[courseHash];
 
-				if(course.state != State.Deactivated) {
-					revert InvalidState();
-				}
+					if(course.state != State.Deactivated) {
+							revert InvalidState();
+					}
 
-				course.state = State.Purchased;
-				course.price = msg.value;
-			}
+					course.state = State.Purchased;
+					course.price = msg.value;
+    }
 
     function activateCourse(
         bytes32 courseHash
@@ -114,7 +113,6 @@ contract CourseMarketplace {
           revert InvalidState();
       }
 
-      // ownedCourses[courseHash].state = State.Activated;
       course.state = State.Activated;
     }
 
