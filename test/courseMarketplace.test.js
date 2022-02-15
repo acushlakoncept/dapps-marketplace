@@ -305,6 +305,10 @@ contract("CourseMarketplace", accounts => {
       currentOwner = await _contract.getContractOwner()
     })
 
+    after(async () => {
+      await _contract.resumeContract({from: currentOwner})
+    })
+
     it("should fail when contract is NOT stopped", async () => {
       await catchRevert(_contract.emergencyWithdraw({from: currentOwner}))
     })
@@ -333,6 +337,54 @@ contract("CourseMarketplace", accounts => {
         contractBalance, 
         0, 
         "Contract balance is NOT 0!")
+    })
+    
+  })
+
+
+  describe("Self Destruct", () => {
+    let currentOwner
+    
+    before(async () => {
+      currentOwner = await _contract.getContractOwner()
+    })
+
+    it("should fail when contract is NOT stopped", async () => {
+      await catchRevert(_contract.selfDestruct({from: currentOwner}))
+    })
+
+    it("should have +contract funds on contract owner", async () => {
+      await _contract.stopContract({from: contractOwner})
+      
+      const contractBalance = await getBalance(_contract.address)
+      const ownerBalance = await getBalance(currentOwner)
+
+      const result = await _contract.selfDestruct({from: currentOwner})
+      const gas = await getGas(result)
+
+      const newOwnerBalance = await getBalance(currentOwner)
+
+      assert.equal(
+        toBN(ownerBalance).add(toBN(contractBalance)).sub(gas).toString(),
+        newOwnerBalance,
+        "Owner doesn't have contract balance!"
+      )
+    })
+
+    it("should have contract balance of 0", async () => {
+      const contractBalance = await getBalance(_contract.address)
+      assert.equal(
+        contractBalance, 
+        0, 
+        "Contract balance is NOT 0!")
+    })
+
+    it("should have 0x bytecode", async () => {
+      const code = await web3.eth.getCode(_contract.address)
+      assert.equal(
+        code, 
+        "0x", 
+        "Contract is NOT destroyed")
     })
     
   })
