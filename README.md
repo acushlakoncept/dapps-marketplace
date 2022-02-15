@@ -55,7 +55,12 @@ truffle migrate --reset
 ### Running Test
 `truffle test`
 
-
+### Get Some Ropsten Ether for test networ
+- [https://moonborrow.com/](moonborrow.com)
+- [https://faucet.dimensions.network/](faucet.dimensions.network)
+- [https://faucet.metamask.io/](faucet.metamask.io)
+- [https://faucet.ropsten.be/](faucet.ropsten.be)
+- [https://faucet.egorfine.com/](faucet.egorfine.com)
 # Author
 
 👤 **Uduak Essien**
