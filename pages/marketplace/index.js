@@ -57,7 +57,8 @@ export default function Marketplace({courses}) {
 
                   if(requireInstall) {
                     return (
-                      <Button 
+                      <Button
+                      size="sm"
                       variant="lightPurple"
                       disabled={true}
                       >
@@ -69,6 +70,7 @@ export default function Marketplace({courses}) {
                   if(isConnecting) {
                       return (
                         <Button 
+                        size="sm"
                         variant="lightPurple"
                         disabled={true}
                         >
@@ -79,7 +81,7 @@ export default function Marketplace({courses}) {
 
                   if(!ownedCourses.hasInitialResponse) {
                     return (
-                      <div style={{height: "50px"}} />
+                      <div style={{height: "42px"}} />
                     )
                   }
 
@@ -87,21 +89,26 @@ export default function Marketplace({courses}) {
                   if(owned) {
                     return (
                       <>
-                      <div>
+                      <div className="flex">
                       <Button 
-                      variant="green"
-                      disabled={true}
+                      onClick={() => alert('You are owner of this course!')}
+                      size="sm"
+                      variant="white"
+                      disabled={false}
                       >
-                        Owned
+                        Yours &#10004;
                       </Button>
                       { owned.state === "deactivated" && 
-                        <Button 
-                        variant="purple"
-                        disabled={false}
-                        onClick={() => alert('Reactivate')}
-                        >
-                          Fund to Activate
-                        </Button>
+                        <div className="ml-1">
+                          <Button 
+                          size="sm"
+                          variant="purple"
+                          disabled={false}
+                          onClick={() => alert('Reactivate')}
+                          >
+                            Fund to Activate
+                          </Button>
+                        </div>
                       }
                       </div>
                       </>
@@ -110,6 +117,7 @@ export default function Marketplace({courses}) {
 
                   return (
                     <Button 
+                    size="sm"
                     variant="lightPurple"
                     onClick={() => setSelectedCourse(course)}
                     disabled={!hasConnectedWallet}
