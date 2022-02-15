@@ -57,9 +57,41 @@ contract CourseMarketplace {
         _;
     }
 
-		modifier onlyWhenNotStopped {
-			require(!isStopped);
-			_;
+	modifier onlyWhenNotStopped {
+		require(!isStopped);
+		_;
+	}
+
+	modifier onlyWhenStopped {
+	require(isStopped);
+	_;
+	}
+
+		receive() external payable {}
+
+		function withdraw(uint amount)
+			external
+			onlyOwner
+		 {
+			 (bool success, ) = owner.call{value: amount}("");
+			 require(success, "Withdraw failed");
+		 }
+
+		function emergencyWithdraw()
+			external
+			onlyWhenStopped
+			onlyOwner
+		{
+			(bool success, ) = owner.call{value: address(this).balance}("");
+			require(success, "Transfer failed");
+		}
+
+		function selfDestruct()
+			external
+			onlyWhenStopped
+			onlyOwner
+		{
+			selfdestruct(owner);
 		}
 
     function stopContract()

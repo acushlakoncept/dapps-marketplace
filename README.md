@@ -44,6 +44,14 @@ npm run dev
 # or
 yarn dev
 ```
+
+### Compile Contract
+// --reset flag forcefully recompiles the contract
+
+```
+truffle migrate --reset
+```
+
 ### Running Test
 `truffle test`
 
