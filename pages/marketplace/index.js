@@ -6,8 +6,9 @@ import { BaseLayout } from "@components/ui/layout";
 import { MarketHeader } from "@components/ui/marketplace";
 import { OrderModal } from "@components/ui/order";
 import { getAllCourses } from "@content/courses/fetcher";
-import { Result } from "postcss";
 import { useState } from "react";
+import { toast } from 'react-toastify';
+
 
 export default function Marketplace({courses}) {
   const { web3, contract, requireInstall } = useWeb3();
@@ -61,10 +62,39 @@ export default function Marketplace({courses}) {
       console.log("Error purchasing course");
     }
   }
+
+  const notify = () =>{
+    const resolveWithSomeData = new Promise(resolve => setTimeout(() => resolve("world"), 3000));
+    toast.promise(
+      resolveWithSomeData1,
+        {
+          pending: {
+            render(){
+              return "I'm loading"
+            },
+            icon: false,
+          },
+          success: {
+            render({data}){
+              return `Hello ${data}`
+            },
+            // other options
+            icon: "🟢",
+          },
+          error: {
+            render({data}){
+              // When the promise reject, data will contains the error
+              return <div>{data.message ?? "Transaction has failed"}</div>
+            }
+          }
+        }
+    )
+  }
   
 return (
     <>
       <MarketHeader />
+      <Button onClick={notify}>Notify</Button>
       <CourseList courses={courses}>
         {course => {
           const owned = ownedCourses.lookup[course.id];

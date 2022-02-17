@@ -35,6 +35,18 @@ Install modules:
 npm install
 ```
 
+### Ropsten Deployment
+- Create account at [https://infura.io/](infura.io) to generate a PROJECT ID
+- Setup a metamask if you don't have one, you will need the passphrase - MNEMONICS. Keep this secret or you can create a new metamask account just for this purpose.
+- Add `keys.json` to the root directory with the following fields
+
+```json
+{
+  "INFURA_PROJECT_ID": "YOUR-PROJECT-ID",
+  "MNEMONIC": "RECOVERY PHRASE FROM METAMASK"
+}
+```
+
 ### Usage
 
 First, run the development server:

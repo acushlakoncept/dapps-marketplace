@@ -3,10 +3,9 @@ import useSWR from "swr"
 
 const NETWORKS = {
     1: "Ethereum Mainnet",
-    2: "Ropsten Test Network",
-    3: "Rinkeby Test Network",
-    4: "Goerli Test Network",
-    5: "Kovan Test Network",
+    3: "Ropsten Test Network",
+    4: "Rinkeby Test Network",
+    5: "Goerli Test Network",
     42: "Kovan Test Network",
     56: "Binance Smart Chain",
     79: "Zenith Mainnet",
