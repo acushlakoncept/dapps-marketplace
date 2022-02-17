@@ -1,4 +1,5 @@
 const HDWalletProvider = require("@truffle/hdwallet-provider");
+const keys = require("./keys.json");
 
 module.exports = {
   contracts_build_directory: "./public/contracts",
@@ -12,9 +13,9 @@ module.exports = {
       provider: () =>
         new HDWalletProvider({
           mnemonic: {
-            phrase: ""
+            phrase: keys.MNEMONIC,
           },
-          providerOrUrl: "https://ropsten.infura.io/v3/YOUR-PROJECT-ID",
+          providerOrUrl: `https://ropsten.infura.io/v3/${keys.INFURA_PROJECT_ID}`,
           addressIndex: 0,
         }),
       network_id: 3,
@@ -35,3 +36,7 @@ module.exports = {
     }
   },
 };
+
+
+// transaction hash:    0x93817166e471f342f4d774bf2c28796eaf403945325b3b8a0429c897b9837257
+// contract address:    0xAD5E22bddD7d7Df1eDFFcB97105035E5BDECA946
