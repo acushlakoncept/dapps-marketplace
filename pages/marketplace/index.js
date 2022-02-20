@@ -1,13 +1,13 @@
 import { useOwnedCourses, useWalletInfo } from "@components/hooks/web3";
 import { useWeb3 } from "@components/providers";
-import { Button, Loader, Message } from "@components/ui/common";
+import { Button, Loader } from "@components/ui/common";
 import { CourseCard, CourseList } from "@components/ui/course";
 import { BaseLayout } from "@components/ui/layout";
 import { MarketHeader } from "@components/ui/marketplace";
 import { OrderModal } from "@components/ui/order";
 import { getAllCourses } from "@content/courses/fetcher";
+import { withToast } from "@utils/toast";
 import { useState } from "react";
-import { toast } from 'react-toastify';
 
 
 export default function Marketplace({courses}) {
@@ -33,9 +33,9 @@ export default function Marketplace({courses}) {
         { type: "bytes32", value: orderHash },
         { type: "bytes32", value: emailHash },
       )
-      _purchaseCourse(hexCourseId, proof, value);
+      withToast(_purchaseCourse(hexCourseId, proof, value));
     } else {
-      _repurchaseCourse(orderHash, value)
+      withToast(_repurchaseCourse(orderHash, value))
     }
 
   }
@@ -46,9 +46,10 @@ export default function Marketplace({courses}) {
         hexCourseId, 
         proof
         ).send({ from: account.data, value });
-        console.log(result)
-    } catch  {
-      console.log("Error purchasing course");
+        return result;
+    } catch(error)  {
+      throw new Error(error.message)
+      // console.log("Error purchasing course");
     }
   }
 
@@ -57,44 +58,16 @@ export default function Marketplace({courses}) {
       const result = await contract.methods.repurchaseCourse(
         courseHash
         ).send({ from: account.data, value });
-        console.log(result)
-    } catch  {
-      console.log("Error purchasing course");
+        return result;
+     } catch(error)  {
+       throw new Error(error.message)
+      // console.log("Error purchasing course");
     }
   }
 
-  const notify = () =>{
-    const resolveWithSomeData = new Promise(resolve => setTimeout(() => resolve("world"), 3000));
-    toast.promise(
-      resolveWithSomeData1,
-        {
-          pending: {
-            render(){
-              return "I'm loading"
-            },
-            icon: false,
-          },
-          success: {
-            render({data}){
-              return `Hello ${data}`
-            },
-            // other options
-            icon: "🟢",
-          },
-          error: {
-            render({data}){
-              // When the promise reject, data will contains the error
-              return <div>{data.message ?? "Transaction has failed"}</div>
-            }
-          }
-        }
-    )
-  }
-  
 return (
     <>
       <MarketHeader />
-      <Button onClick={notify}>Notify</Button>
       <CourseList courses={courses}>
         {course => {
           const owned = ownedCourses.lookup[course.id];
