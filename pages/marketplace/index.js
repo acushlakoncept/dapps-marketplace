@@ -62,7 +62,6 @@ export default function Marketplace({courses}) {
         return result;
     } catch(error)  {
       throw new Error(error.message)
-      // console.log("Error purchasing course");
     } finally {
       setBusyCourseId(null)
     }
@@ -87,7 +86,6 @@ export default function Marketplace({courses}) {
         return result;
      } catch(error)  {
        throw new Error(error.message)
-      // console.log("Error purchasing course");
     } finally {
       setBusyCourseId(null)
     }
@@ -138,18 +136,16 @@ return (
 
                 if(!ownedCourses.hasInitialResponse) {
                   return (
-                    // <div style={{height: "42px"}} />
                     <Button
                       variant="white"
                       disabled={true}
                       size="sm" >
-                        Loading State...
+                      { hasConnectedWallet ? "Loading..." : "Connect Wallet" }
                       </Button>
                   )
                 }
 
                 const isBusy = busyCourseId === course.id;
-                // const isBusy =true;
                 if(owned) {
                   return (
                     <>
