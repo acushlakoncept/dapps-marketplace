@@ -14,6 +14,7 @@ export default function Marketplace({courses}) {
   const { web3, contract, requireInstall } = useWeb3();
   const {hasConnectedWallet, account, isConnecting} = useWalletInfo();
   const { ownedCourses } = useOwnedCourses(courses, account.data);
+
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [busyCourseId, setBusyCourseId] = useState(null);
   const [isNewPurchase, setIsNewPurchase] = useState(true);
@@ -35,19 +36,29 @@ export default function Marketplace({courses}) {
         { type: "bytes32", value: orderHash },
         { type: "bytes32", value: emailHash },
       )
-      withToast(_purchaseCourse(hexCourseId, proof, value));
+      withToast(_purchaseCourse({hexCourseId, proof, value}, course));
     } else {
-      withToast(_repurchaseCourse(orderHash, value))
+      withToast(_repurchaseCourse({courseHash: orderHash, value}, course))
     }
 
   }
 
-  const _purchaseCourse = async (hexCourseId, proof, value) => {
+  const _purchaseCourse = async ({hexCourseId, proof, value}, course) => {
     try {
       const result = await contract.methods.purchaseCourse(
         hexCourseId, 
         proof
         ).send({ from: account.data, value });
+
+        ownedCourses.mutate([
+          ...ownedCourses.data, {
+          ...course,
+          proof,
+          state: "purchased",
+          owner: account.data,
+          price: value
+          }
+        ]);
         return result;
     } catch(error)  {
       throw new Error(error.message)
@@ -57,11 +68,12 @@ export default function Marketplace({courses}) {
     }
   }
 
-  const _repurchaseCourse = async (courseHash, value) => {
+  const _repurchaseCourse = async ({courseHash, value}, course) => {
     try {
       const result = await contract.methods.repurchaseCourse(
         courseHash
         ).send({ from: account.data, value });
+        ownedCourses.mutate();
         return result;
      } catch(error)  {
        throw new Error(error.message)
